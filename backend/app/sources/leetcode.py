@@ -1,7 +1,7 @@
 """LeetCode stats from the public GraphQL endpoint (no auth needed)."""
 
 import json
-from datetime import UTC, date, datetime
+from datetime import UTC, datetime
 
 import httpx
 
@@ -42,9 +42,7 @@ async def _fetch(username: str) -> dict:
     }
     # submissionCalendar is a JSON string of {unix_timestamp: submissions_that_day}
     raw = json.loads(user["userCalendar"]["submissionCalendar"] or "{}")
-    calendar = {
-        datetime.fromtimestamp(int(ts), tz=UTC).date(): n for ts, n in raw.items()
-    }
+    calendar = {datetime.fromtimestamp(int(ts), tz=UTC).date(): n for ts, n in raw.items()}
     return {"solved": solved, "calendar": calendar}
 
 

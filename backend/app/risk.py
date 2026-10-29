@@ -109,36 +109,52 @@ def assess(source: str, counts: Counts, today: date, unit: str = "contributions"
     alerts: list[Alert] = []
 
     if not s.active_today and s.current_streak >= 2:
-        alerts.append(Alert(
-            "danger", source, "streak_ends_today",
-            f"Your {s.current_streak}-day {source} streak ends at midnight. Go ship something.",
-        ))
+        alerts.append(
+            Alert(
+                "danger",
+                source,
+                "streak_ends_today",
+                f"Your {s.current_streak}-day {source} streak ends at midnight. Go ship something.",
+            )
+        )
 
     idle = days_since_active(counts, today)
     recent_history = _window_sum(counts, today - timedelta(days=FLATLINE_DAYS), TREND_WINDOW)
     if idle is not None and idle >= FLATLINE_DAYS and recent_history > 0:
-        alerts.append(Alert(
-            "warning", source, "flatline",
-            f"No {source} {unit} in {idle} days. It was active the two weeks before.",
-        ))
+        alerts.append(
+            Alert(
+                "warning",
+                source,
+                "flatline",
+                f"No {source} {unit} in {idle} days. It was active the two weeks before.",
+            )
+        )
 
     if s.last_week >= MIN_WEEK_FOR_TREND and s.this_week <= s.last_week * DECLINE_RATIO:
-        alerts.append(Alert(
-            "warning", source, "declining",
-            f"{source} {unit} down {abs(s.change_pct or 0)}% week-over-week "
-            f"({s.last_week} → {s.this_week}).",
-        ))
+        alerts.append(
+            Alert(
+                "warning",
+                source,
+                "declining",
+                f"{source} {unit} down {abs(s.change_pct or 0)}% week-over-week "
+                f"({s.last_week} → {s.this_week}).",
+            )
+        )
 
     # Only project a stop while still active; flatline already covers the idle case
     if s.active_today or s.current_streak:
         days = projected_days_to_zero(counts, today)
         if days is not None and days <= PROJECTION_HORIZON:
             n = max(1, round(days))
-            alerts.append(Alert(
-                "info", source, "projected_stop",
-                f"At this pace your {source} activity hits zero in about {n} "
-                f"day{'s' if n != 1 else ''}. Your streak is at risk.",
-            ))
+            alerts.append(
+                Alert(
+                    "info",
+                    source,
+                    "projected_stop",
+                    f"At this pace your {source} activity hits zero in about {n} "
+                    f"day{'s' if n != 1 else ''}. Your streak is at risk.",
+                )
+            )
 
     return alerts
 

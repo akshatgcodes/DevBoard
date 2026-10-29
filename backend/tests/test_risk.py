@@ -79,8 +79,6 @@ def test_healthy_activity_has_no_alerts():
 
 
 def test_report_sorts_danger_first():
-    out = risk.report(
-        {"LeetCode": days((4, 2), (6, 1)), "GitHub": days((1, 1), (2, 1))}, TODAY
-    )
+    out = risk.report({"LeetCode": days((4, 2), (6, 1)), "GitHub": days((1, 1), (2, 1))}, TODAY)
     assert out["alerts"][0]["level"] == "danger"
     assert set(out["summaries"]) == {"LeetCode", "GitHub"}
