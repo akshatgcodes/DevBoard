@@ -31,7 +31,9 @@ class Goal(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, server_default=func.now())
 
     user: Mapped[User] = relationship(back_populates="goals")
-    logs: Mapped[list["GoalLog"]] = relationship(back_populates="goal", cascade="all, delete-orphan")
+    logs: Mapped[list["GoalLog"]] = relationship(
+        back_populates="goal", cascade="all, delete-orphan"
+    )
 
 
 class GoalLog(Base):
