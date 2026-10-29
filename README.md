@@ -51,7 +51,7 @@ Most developer dashboards are profile cards: they show today's numbers and stop 
 | Database | PostgreSQL in production, SQLite for local dev (same models) |
 | Auth | GitHub OAuth (`read:user`), signed session cookie (itsdangerous) |
 | Data | GitHub GraphQL + REST events API · LeetCode public GraphQL |
-| Tooling | uv · pytest · ruff · GitHub Actions |
+| Tooling | uv · pytest · Vitest · ruff · GitHub Actions |
 
 ---
 

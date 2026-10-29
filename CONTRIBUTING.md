@@ -45,7 +45,7 @@ cd ../frontend && npm install && npm run dev   # app on :5173
 
    ```bash
    (cd backend && uv run ruff check . && uv run pytest)
-   (cd frontend && npm run build)
+   (cd frontend && npm test && npm run build)
    ```
 
 4. **Open a pull request** against `main`. The PR template will guide you.

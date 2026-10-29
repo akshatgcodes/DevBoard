@@ -51,7 +51,7 @@ Frontend (`frontend/.env`, optional): `VITE_API_URL` points the app at an API on
 
 ```bash
 cd backend && uv run ruff check . && uv run pytest
-cd frontend && npm run build
+cd frontend && npm test && npm run build
 ```
 
 ---
