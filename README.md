@@ -13,6 +13,9 @@
 </p>
 
 <p align="center">
+  <a href="https://devboard.akshatgcodes.in">
+    <img src="https://img.shields.io/badge/live_demo-3fb950-3fb950?style=flat-square" alt="Live Demo">
+  </a>
   <img src="https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB" alt="React">
   <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript">
   <img src="https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white" alt="FastAPI">
@@ -29,6 +32,9 @@ Most developer dashboards are profile cards: they show today's numbers and stop 
 > 🔥 Your 9-day GitHub streak ends at midnight. Go ship something.
 > 📉 GitHub contributions down 46% week-over-week (28 → 15).
 > ⏳ At this pace your LeetCode activity hits zero in about 2 days. Your streak is at risk.
+
+> **Live demo →** [devboard.akshatgcodes.in](https://devboard.akshatgcodes.in)
+> Log in with GitHub (read-only `read:user` scope).
 
 ---
 

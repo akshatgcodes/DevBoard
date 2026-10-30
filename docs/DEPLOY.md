@@ -1,26 +1,31 @@
 # Deploy
 
-DevBoard is **not deployed yet**. This is the intended setup.
+Live at **https://devboard.akshatgcodes.in**: one Vercel project, connected to this repo, so every push to `main` deploys (Dependabot branches are skipped by `ignoreCommand`).
 
-| Part | Platform |
+| Path | Served by |
 |---|---|
-| Frontend | Vercel (`frontend/`, build `npm run build`, output `dist`) |
-| API | Render web service (`backend/`, start `uv run uvicorn app.main:app --host 0.0.0.0 --port $PORT`) |
-| Database | Neon PostgreSQL |
+| `/` | the landing page (`landing/`, a Next.js static export) |
+| `/app/` | the React app (`frontend/`, built with `VITE_BASE=/app/`) |
+| `/api/…`, `/auth/…`, `/health` | FastAPI as a Python function (`index.py` imports `backend/app/main.py`) |
+
+`vercel.json` holds the builds and routes. Vercel's Python runtime installs from `requirements.txt` at the root, which is exported from `backend/uv.lock`:
+
+```bash
+cd backend && uv export --no-dev --no-hashes --no-emit-project -o ../requirements.txt
+```
+
+The database is Neon Postgres (free tier, Singapore). The app and API share one origin, so the session cookie needs no cross-site settings.
 
 ## Environment
 
-On the API:
+Set in the Vercel project, production:
 
-- `DATABASE_URL=postgresql+psycopg://…` (Neon connection string)
-- `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET` from a production OAuth app
-- `OAUTH_REDIRECT_URL=https://<api-host>/auth/github/callback`
-- `FRONTEND_URL=https://<frontend-host>`
-- `SESSION_SECRET` set to a long random value
-- `CROSS_SITE_COOKIES=true` (frontend and API on different domains)
-- `DEV_LOGIN` unset
-
-On the frontend: `VITE_API_URL=https://<api-host>`.
+- `DATABASE_URL`: Neon connection string (`postgresql+psycopg://…`, pooled)
+- `SESSION_SECRET`: long random value
+- `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`: a GitHub OAuth app whose callback URL is `https://devboard.akshatgcodes.in/auth/github/callback`
+- `OAUTH_REDIRECT_URL=https://devboard.akshatgcodes.in/auth/github/callback`
+- `FRONTEND_URL=https://devboard.akshatgcodes.in/app/` (where login returns to)
+- `CROSS_SITE_COOKIES=false`, `DEV_LOGIN=false`
 
 ---
 
